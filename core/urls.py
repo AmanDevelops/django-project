@@ -7,4 +7,5 @@ urlpatterns = [
     path("", Public.as_view(), name="public"),
     path("protected/", Private.as_view(), name="protected"),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("send_email/", send_email, name="send-email"),
 ]

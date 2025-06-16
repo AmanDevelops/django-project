@@ -151,3 +151,6 @@ SIMPLE_JWT = {
     "ALGORITHM": "HS256",
     "SIGNING_KEY": os.getenv("JWT_SIGNING_KEY"),
 }
+
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
