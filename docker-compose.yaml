@@ -48,6 +48,25 @@ services:
       - DJANGO_SETTINGS_MODULE=django_project.settings
     restart: on-failure
 
+  django:
+    build: .
+    container_name: django-app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=django_project.settings
+    restart: on-failure
+
 volumes:
   postgres-data:
   redis-data:
