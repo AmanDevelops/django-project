@@ -17,7 +17,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Loading Environment variables
-
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,14 +77,21 @@ TEMPLATES = [
     },
 ]
 
+
+WSGI_APPLICATION = "django_project.wsgi.application"
+
+#JWT Authentication
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
 
-WSGI_APPLICATION = "django_project.wsgi.application"
-
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": os.getenv("JWT_SIGNING_KEY"),
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -145,12 +151,5 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "ALGORITHM": "HS256",
-    "SIGNING_KEY": os.getenv("JWT_SIGNING_KEY"),
-}
-
-
+# Celery Configuration
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")

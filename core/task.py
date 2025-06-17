@@ -1,3 +1,11 @@
+"""
+Email task module for handling email operations in the application.
+
+This module provides Celery tasks for sending emails via SMTP,
+including welcome emails to new users. It uses environment variables
+for SMTP configuration to keep sensitive information secure.
+"""
+
 import os
 import smtplib
 
@@ -13,7 +21,23 @@ USER_PASSWORD = os.getenv("USER_PASSWORD")
 
 
 @shared_task
-def send_welcome_email(user_email):
+def send_welcome_email(user_email: str) -> str:
+    """
+    Send a welcome email to a new user.
+    
+    This Celery task establishes an SMTP connection and sends a
+    welcome message to the provided email address.
+    
+    Args:
+        user_email (str): The recipient's email address
+        
+    Returns:
+        str: Success message or error description
+    
+    Raises:
+        Exception: Captures and logs any errors that occur during
+                  the email sending process
+    """
     try:
         subject = "Hello From Aman Develops"
         body = "This is a test email."
